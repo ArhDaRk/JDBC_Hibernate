@@ -12,11 +12,24 @@ public class Util {
 
     private Util() {
     }
-    public static Connection getConnection () throws SQLException {
-        DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+    private static Connection connection;
+
+    public static Connection getConnection() throws SQLException {
+        if (connection == null) {
+            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        }
+        return connection;
     }
-    public static void closeConnection () throws SQLException {
-        getConnection().close();
+
+    public static void closeConnection() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
