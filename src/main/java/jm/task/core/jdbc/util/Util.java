@@ -12,26 +12,11 @@ public class Util {
 
     private Util() {
     }
-
-    public static void doSomething(String sqlReqvest) throws SQLException {
+    public static Connection getConnection () throws SQLException {
         DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             Statement statement = connection.createStatement()) {
-            statement.execute(sqlReqvest);
-        }
+        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
     }
-
-    public static <T> List<T> getList(String sql, Function<ResultSet, T> function) throws SQLException {
-        DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery(sql)) {
-            List<T> list = new ArrayList<>();
-            while (rs.next()) {
-                list.add(function.apply(rs));
-            }
-            return list;
-        }
-
+    public static void closeConnection () throws SQLException {
+        getConnection().close();
     }
 }
