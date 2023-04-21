@@ -1,4 +1,5 @@
 package jm.task.core.jdbc;
+
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.util.Util;
 
@@ -10,7 +11,7 @@ public class Main {
         userDaoJDBC.saveUser("Petr", "Petrov", (byte) 21);
         userDaoJDBC.saveUser("Andrey", "Andreev", (byte) 22);
         userDaoJDBC.saveUser("Vasya", "Vasylev", (byte) 23);
-        userDaoJDBC.getAllUsers();
+        System.out.println(userDaoJDBC.getAllUsers());
         userDaoJDBC.cleanUsersTable();
         userDaoJDBC.dropUsersTable();
         Util.closeConnection();
