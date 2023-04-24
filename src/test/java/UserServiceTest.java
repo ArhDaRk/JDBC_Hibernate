@@ -7,6 +7,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class UserServiceTest {
@@ -103,6 +104,6 @@ public class UserServiceTest {
     }
     @AfterClass
     public static void afterClass(){
-        Util.closeConnection();
+        Util.closeConnection(UserDaoJDBCImpl.connection);
     }
 }

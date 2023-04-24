@@ -1,29 +1,28 @@
 package jm.task.core.jdbc.util;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
 
 public class Util {
     private static final String URL = "jdbc:mysql://localhost:3306/mydbtest";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
+
     private Util() {
     }
 
-    private static Connection connection;
-
-    public static Connection getConnection() throws SQLException {
-        if (connection == null) {
+    public static Connection getConnection() {
+        Connection connection;
+        try {
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return connection;
     }
 
-    public static void closeConnection() {
+    public static void closeConnection(Connection connection) {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
@@ -32,4 +31,9 @@ public class Util {
             throw new RuntimeException(e);
         }
     }
+    // ----------------------------------------------
+
+
 }
+
+
