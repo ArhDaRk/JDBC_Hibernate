@@ -3,6 +3,7 @@ import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.service.UserServiceImpl;
 import jm.task.core.jdbc.util.Util;
 
+
 public class Main {
     public static void main(String[] args) {
         UserServiceImpl test = new UserServiceImpl(new UserDaoJDBCImpl());
@@ -14,5 +15,9 @@ public class Main {
         System.out.println(test.getAllUsers());
         test.cleanUsersTable();
         Util.closeConnection(UserDaoJDBCImpl.connection);
+        // ____________________________________________________________ //
+
+
+
     }
 }

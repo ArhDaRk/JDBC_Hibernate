@@ -1,5 +1,6 @@
 package jm.task.core.jdbc.util;
 
+
 import java.sql.*;
 
 public class Util {
@@ -31,7 +32,19 @@ public class Util {
             throw new RuntimeException(e);
         }
     }
+
     // ----------------------------------------------
+//    public static Session getSession() {
+//        Configuration configuration = new Configuration();
+//        configuration.setProperty("connection.driver_class", "com.mysql.jdbc.Driver");
+//        configuration.setProperty("hibernate.connection.url", URL);
+//        configuration.setProperty("hibernate.connection.username", USERNAME);
+//        configuration.setProperty("hibernate.connection.password", PASSWORD);
+//        configuration.setProperty("dialect", "org.hibernate.dialect.MySQLDialect");
+//        configuration.setProperty("show_sql", "true");
+//        configuration.addAnnotatedClass(User.class);
+//        return configuration.buildSessionFactory().openSession();
+//    }
 
 
 }

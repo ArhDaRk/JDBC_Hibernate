@@ -1,27 +1,36 @@
 package jm.task.core.jdbc.dao;
-import static jm.task.core.jdbc.util.Util.getConnection;
 
-import com.mysql.cj.Session;
 import jm.task.core.jdbc.model.User;
-import org.hibernate.SessionFactory;
+import jm.task.core.jdbc.util.Util;
 
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
-import static jm.task.core.jdbc.util.Util.getConnection;
+
 
 public class UserDaoHibernateImpl implements UserDao {
-
 
     public UserDaoHibernateImpl() {
 
     }
-
+//    public static final Session session = Util.getSession();
 
     @Override
     public void createUsersTable() {
-
+//        String sql = "CREATE TABLE IF NOT EXISTS users (" +
+//                "id SERIAL PRIMARY KEY, " +
+//                "name VARCHAR(128)," +
+//                "lastName VARCHAR(128)," +
+//                "age TINYINT)";
+//        Transaction transaction = session.getTransaction();
+//        try {
+//            transaction.begin();
+//            session.createQuery(sql,User.class);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//
+//        transaction.commit();
     }
 
     @Override

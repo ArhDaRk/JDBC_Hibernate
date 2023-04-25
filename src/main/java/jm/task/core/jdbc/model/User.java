@@ -2,7 +2,7 @@ package jm.task.core.jdbc.model;
 
 import javax.persistence.*;
 
-@Table
+@Table(name = "Users")
 @Entity
 public class User {
     @Id
@@ -10,13 +10,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "name")
     private String name;
 
-    @Column
+    @Column(name = "lastName")
     private String lastName;
 
-    @Column
+    @Column(name = "age")
     private Byte age;
 
     public User() {
