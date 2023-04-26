@@ -1,6 +1,11 @@
 package jm.task.core.jdbc.util;
 
 
+import jm.task.core.jdbc.model.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import java.sql.*;
 
 public class Util {
@@ -34,19 +39,23 @@ public class Util {
     }
 
     // ----------------------------------------------
-//    public static Session getSession() {
-//        Configuration configuration = new Configuration();
-//        configuration.setProperty("connection.driver_class", "com.mysql.jdbc.Driver");
-//        configuration.setProperty("hibernate.connection.url", URL);
-//        configuration.setProperty("hibernate.connection.username", USERNAME);
-//        configuration.setProperty("hibernate.connection.password", PASSWORD);
-//        configuration.setProperty("dialect", "org.hibernate.dialect.MySQLDialect");
-//        configuration.setProperty("show_sql", "true");
-//        configuration.addAnnotatedClass(User.class);
-//        return configuration.buildSessionFactory().openSession();
-//    }
+    public static SessionFactory getSessionFactory() {
+        Configuration configuration = new Configuration();
+        configuration.setProperty("connection.driver_class", "com.mysql.jdbc.Driver");
+        configuration.setProperty("hibernate.connection.url", URL);
+        configuration.setProperty("hibernate.connection.username", USERNAME);
+        configuration.setProperty("hibernate.connection.password", PASSWORD);
+        configuration.setProperty("dialect", "org.hibernate.dialect.MySQLDialect");
+        configuration.setProperty("show_sql", "true");
+        configuration.addAnnotatedClass(User.class);
+        return configuration.buildSessionFactory();
+    }
 
-
+    public static void closeSessionFactory(SessionFactory sessionFactory) {
+        if (sessionFactory != null && !sessionFactory.isClosed()) {
+            sessionFactory.close();
+        }
+    }
 }
 
 
