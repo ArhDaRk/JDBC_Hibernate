@@ -15,11 +15,17 @@ public class UserDaoHibernateImpl implements UserDao {
     public UserDaoHibernateImpl() {
 
     }
-    private void checkTransactionCommit(Transaction transaction) {
-       if (transaction.getStatus() == TransactionStatus.ACTIVE || transaction.getStatus() == TransactionStatus.MARKED_ROLLBACK) {
-           transaction.rollback();
-       }
+
+    private void transactionCommit(Transaction transaction) {
+        try {
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.getStatus() == TransactionStatus.ACTIVE || transaction.getStatus() == TransactionStatus.MARKED_ROLLBACK) {
+                transaction.rollback();
+            }
+        }
     }
+
     public static SessionFactory sessionFactory = Util.getSessionFactory();
 
     @Override
@@ -31,8 +37,7 @@ public class UserDaoHibernateImpl implements UserDao {
                     "name VARCHAR(50) NOT NULL, lastName VARCHAR(50) NOT NULL, " +
                     "age TINYINT NOT NULL)";
             session.createSQLQuery(sql).addEntity(User.class).executeUpdate();
-            transaction.commit();
-            checkTransactionCommit(transaction);
+            transactionCommit(transaction);
         }
     }
 
@@ -42,8 +47,7 @@ public class UserDaoHibernateImpl implements UserDao {
             Transaction transaction = session.beginTransaction();
             String sql = "DROP TABLE IF EXISTS users";
             session.createSQLQuery(sql).executeUpdate();
-            transaction.commit();
-            checkTransactionCommit(transaction);
+            transactionCommit(transaction);
         }
     }
 
@@ -53,9 +57,8 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(user);
-            session.getTransaction().commit();
+            transactionCommit(transaction);
             System.out.println("User с именем – " + name + " добавлен в базу данных");
-            checkTransactionCommit(transaction);
         }
     }
 
@@ -65,8 +68,7 @@ public class UserDaoHibernateImpl implements UserDao {
             Transaction transaction = session.beginTransaction();
             User user = session.get(User.class, id);
             session.delete(user);
-            session.getTransaction().commit();
-            checkTransactionCommit(transaction);
+            transactionCommit(transaction);
         }
     }
 
@@ -75,8 +77,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             List<User> users = session.createQuery("from User", User.class).getResultList();
-            session.getTransaction().commit();
-            checkTransactionCommit(transaction);
+            transactionCommit(transaction);
             return users;
         }
     }
@@ -86,8 +87,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.createQuery("DELETE User").executeUpdate();
-            session.getTransaction().commit();
-            checkTransactionCommit(transaction);
+            transactionCommit(transaction);
         }
     }
 }
