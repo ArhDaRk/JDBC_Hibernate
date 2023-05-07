@@ -5,8 +5,6 @@ import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,6 +102,7 @@ public class UserDaoHibernateImpl implements UserDao {
                 transaction.commit();
             } catch (Exception e) {
                 transaction.rollback();
+                throw new RuntimeException(e);
             }
         }
     }
